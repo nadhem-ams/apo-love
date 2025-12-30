@@ -712,13 +712,22 @@
       .replace(/\s+/g, "");  // enlève tous les espaces
     }
 
-      function check(){
-      const v = normalizePwd(gateInput.value);
-      const p = normalizePwd(CONFIG.password);
+     function clean(s){
+  return (s || "")
+    .toLowerCase()
+    .normalize("NFKC")
+    .trim()
+    .replace(/[^a-z0-9]/g, ""); // enlève &, espaces, etc.
+}
 
-      if(v === p) unlock();
-      else deny();
-    }
+function check(){
+  const v = clean(gateInput.value);
+  const p = clean(CONFIG.password);
+
+  // accepte aussi "nadhemapo" même si tu tapes avec le &
+  if(v === p) unlock();
+  else deny();
+}
     gateBtn.addEventListener('click', check);
     gateInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') check(); });
 
