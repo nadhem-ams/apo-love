@@ -684,8 +684,7 @@
     const gateError = document.getElementById('gateError');
 
     gateName.textContent = CONFIG.toName;
-    gateHint.textContent = CONFIG.passwordHint ? `Indice : ${CONFIG.passwordHint}` : "";
-
+    gateHint.textContent = "Indice : " + (CONFIG.passwordHint || "");
     const KEY = "love_site_unlocked_v1";
     function isUnlocked(){
       try{ return localStorage.getItem(KEY) === '1'; } catch { return false; }
