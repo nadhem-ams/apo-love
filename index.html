@@ -705,9 +705,18 @@
       spawnHearts(window.innerWidth/2, window.innerHeight*0.55, 18);
       spawnSparkle(window.innerWidth/2, window.innerHeight*0.55);
     }
-    function check(){
-      const v = (gateInput.value || "").trim();
-      if(v === CONFIG.password) unlock();
+      function normalizePwd(s){
+      return (s || "")
+      .normalize("NFKC")      // évite les caractères “bizarres”
+      .trim()                // enlève espaces début/fin
+      .replace(/\s+/g, "");  // enlève tous les espaces
+    }
+
+      function check(){
+      const v = normalizePwd(gateInput.value);
+      const p = normalizePwd(CONFIG.password);
+
+      if(v === p) unlock();
       else deny();
     }
     gateBtn.addEventListener('click', check);
