@@ -29,11 +29,13 @@
 
     /* 🔒 verrouillage visuel derrière le portail */
     body.locked .wrap{
-      filter: blur(22px) brightness(.70) saturate(.9);
-      transform: scale(1.02);
-      user-select:none;
-    }
-    body.locked .wrap *{ pointer-events:none; }
+  filter: blur(22px) brightness(.70) saturate(.9);
+  transform: scale(1.02);
+  user-select:none;
+}
+/* on bloque les clics derrière, MAIS PAS le portail */
+body.locked .wrap *{ pointer-events:none; }
+body.locked #gate, body.locked #gate *{ pointer-events:auto; }
     body.locked canvas#fx{ filter: blur(10px); }
 
     .glow{position:fixed; inset:-80px; pointer-events:none; opacity:.55; filter: blur(30px); z-index:0;}
