@@ -20,11 +20,21 @@
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color:var(--txt);
-      background: radial-gradient(1200px 700px at 15% 10%, rgba(255,77,109,.22), transparent 60%),
-                  radial-gradient(900px 600px at 85% 20%, rgba(255,122,162,.18), transparent 55%),
-                  linear-gradient(135deg, var(--bg1), var(--bg2));
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(255,77,109,.22), transparent 60%),
+        radial-gradient(900px 600px at 85% 20%, rgba(255,122,162,.18), transparent 55%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
       overflow-x:hidden;
     }
+
+    /* 🔒 verrouillage visuel derrière le portail */
+    body.locked .wrap{
+      filter: blur(22px) brightness(.70) saturate(.9);
+      transform: scale(1.02);
+      user-select:none;
+    }
+    body.locked .wrap *{ pointer-events:none; }
+    body.locked canvas#fx{ filter: blur(10px); }
 
     .glow{position:fixed; inset:-80px; pointer-events:none; opacity:.55; filter: blur(30px); z-index:0;}
     .glow::before{
@@ -164,18 +174,12 @@
     .ph{
       aspect-ratio: 4 / 3;
       border-radius: 18px;
-      border:1px dashed rgba(255,255,255,.22);
+      border:1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.04);
       display:grid; place-items:center;
       color: rgba(248,247,255,.65);
       font-weight:900;
       position:relative; overflow:hidden;
-    }
-    .ph::before{
-      content:""; position:absolute; inset:-2px;
-      background: radial-gradient(400px 220px at 30% 10%, rgba(255,77,109,.18), transparent 55%),
-                  radial-gradient(420px 260px at 80% 30%, rgba(255,122,162,.14), transparent 55%);
-      opacity: .9; pointer-events:none;
     }
 
     /* modal */
@@ -191,9 +195,10 @@
     .gate{
       position:fixed; inset:0; z-index:1000;
       display:flex; align-items:center; justify-content:center; padding:18px;
-      background: radial-gradient(900px 500px at 20% 10%, rgba(255,77,109,.22), transparent 60%),
-                  radial-gradient(800px 520px at 80% 20%, rgba(255,122,162,.18), transparent 60%),
-                  rgba(0,0,0,.62);
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(255,77,109,.22), transparent 60%),
+        radial-gradient(800px 520px at 80% 20%, rgba(255,122,162,.18), transparent 60%),
+        rgba(0,0,0,.62);
       backdrop-filter: blur(14px);
     }
     .gate.hide{display:none;}
@@ -238,23 +243,25 @@
     .fadeOut{animation: fadeOut .55s ease forwards;}
     @keyframes fadeOut{to{opacity:0; transform: translateY(10px);}}
 
+    /* cœurs mims en DOM */
+    .float-heart{
+      position: fixed;
+      left: 0; top: 0;
+      z-index: 50;
+      font-size: 22px;
+      pointer-events: none;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+      animation: floatUp 1.8s ease forwards;
+    }
+    @keyframes floatUp{
+      0%{ transform: translate(-50%,-50%) scale(.8); opacity: 0; }
+      10%{ opacity: 1; }
+      100%{ transform: translate(-50%,-170px) scale(1.25); opacity: 0; }
+    }
+
     @media (prefers-reduced-motion: reduce){
       .stars::before,.stars::after,.cursor,.glow::before{animation:none !important;}
     }
-    .float-heart{
-  position: fixed;
-  left: 0; top: 0;
-  z-index: 50;
-  font-size: 22px;
-  pointer-events: none;
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
-  animation: floatUp 1.8s ease forwards;
-}
-@keyframes floatUp{
-  0%{ transform: translate(-50%,-50%) scale(.8); opacity: 0; }
-  10%{ opacity: 1; }
-  100%{ transform: translate(-50%,-170px) scale(1.25); opacity: 0; }
-}
   </style>
 </head>
 <body>
@@ -301,7 +308,7 @@
               <span id="toName">Apo</span>,
               <span class="type" id="typed">j’ai un truc à te dire</span><span class="cursor" aria-hidden="true"></span>
             </h1>
-            <p class="sub" id="subtitle">J’ai fait ce petit site comme une surprise. Un seul objectif : te faire sourire… et te rappeler à quel point tu comptes pour moi.</p>
+            <p class="sub" id="subtitle"></p>
             <div class="btns">
               <button class="btn" id="btnOpen">Ouvre mon message 💌</button>
               <button class="ghost" id="btnScroll">Descends ↓</button>
@@ -316,7 +323,7 @@
             <h2 style="margin:10px 0 8px; font-size:1.45rem;">
               <span id="pairA">Apo</span> × <span id="pairB">Nadhem</span>
             </h2>
-            <div class="note" id="quickNote">Apo, t’es ma personne préférée. Je pense à toi, tout le temps.</div>
+            <div class="note" id="quickNote"></div>
           </div>
         </div>
       </section>
@@ -339,10 +346,7 @@
         <div class="card">
           <div class="pad">
             <div class="kicker">Une promesse</div>
-            <p class="sub" id="promise" style="margin-top:10px">
-              Peu importe la distance, la fatigue, ou les journées compliquées : je veux être là, te soutenir, te faire rire, et t’aimer correctement.
-              Et si un jour tu doutes, tu reviens ici… et tu relis.
-            </p>
+            <p class="sub" id="promise" style="margin-top:10px"></p>
           </div>
         </div>
       </section>
@@ -362,12 +366,11 @@
       </div>
     </div>
 
-    <!-- Musique optionnelle (si tu ajoutes un fichier music.mp3 dans le repo) -->
+    <!-- Musique (upload music.mp3 dans le repo) -->
     <audio id="musicFile" src="music.mp3" preload="auto"></audio>
   </div>
 
   <script>
-    // ✅ CONFIG (modifie ici si tu veux)
     const CONFIG = {
       toName: "Apo",
       fromName: "Nadhem",
@@ -386,10 +389,8 @@
         Et si un jour tu doutes de toi, je serai là pour te rappeler qui tu es : <strong>une fille incroyable.</strong><br><br>
         <strong>Je t’aime fort ❤️</strong>
       `,
-      // 🔒 mot de passe
       password: "nadhem&apo",
       passwordHint: "nos prénoms avec &",
-      // 📸 photos
       usePhotos: true,
       photoPrefix: "photo",
       photoExt: ".jpg"
@@ -414,20 +415,21 @@
     const hearts = [];
     const sparkles = [];
     const rand=(a,b)=>a+Math.random()*(b-a);
+
     function floatHearts(x, y, n=10){
-  const emojis = ["💖","💗","💓","💞","💕","💘","✨"];
-  for(let i=0;i<n;i++){
-    const e = document.createElement("div");
-    e.className = "float-heart";
-    e.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-    e.style.left = (x + (Math.random()*120-60)) + "px";
-    e.style.top  = (y + (Math.random()*40-20)) + "px";
-    e.style.fontSize = (18 + Math.random()*20) + "px";
-    e.style.animationDuration = (1.2 + Math.random()*1.0) + "s";
-    document.body.appendChild(e);
-    setTimeout(()=>e.remove(), 2200);
-  }
-}
+      const emojis = ["💖","💗","💓","💞","💕","💘","✨"];
+      for(let i=0;i<n;i++){
+        const e = document.createElement("div");
+        e.className = "float-heart";
+        e.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        e.style.left = (x + (Math.random()*140-70)) + "px";
+        e.style.top  = (y + (Math.random()*60-30)) + "px";
+        e.style.fontSize = (18 + Math.random()*22) + "px";
+        e.style.animationDuration = (1.0 + Math.random()*1.1) + "s";
+        document.body.appendChild(e);
+        setTimeout(()=>e.remove(), 2200);
+      }
+    }
 
     function heartPath(x,y,s,rot){
       ctx.save();
@@ -465,7 +467,14 @@
     }
     function burst(n=36){
       spawnHearts(window.innerWidth/2, window.innerHeight*0.32, n);
-      for(let i=0;i<10;i++) sparkles.push({x:rand(0,W), y:rand(0,H*0.35), vx:rand(-5.5,-3)*devicePixelRatio, vy:rand(2,4.5)*devicePixelRatio, life:rand(28,45)});
+      for(let i=0;i<10;i++){
+        sparkles.push({
+          x:rand(0,W), y:rand(0,H*0.35),
+          vx:rand(-5.5,-3)*devicePixelRatio,
+          vy:rand(2,4.5)*devicePixelRatio,
+          life:rand(28,45)
+        });
+      }
     }
     function loop(){
       ctx.clearRect(0,0,W,H);
@@ -498,7 +507,6 @@
     }
     loop();
 
-    // INIT + GATE (après chargement)
     window.addEventListener("DOMContentLoaded", () => {
       $("#brandText").textContent = CONFIG.brandText;
       $("#toName").textContent = CONFIG.toName;
@@ -538,8 +546,6 @@
         $$(".ph").forEach((el)=>{
           const i = el.getAttribute("data-i");
           const url = `${CONFIG.photoPrefix}${i}${CONFIG.photoExt}?v=${Date.now()}`;
-          el.style.borderStyle = "solid";
-          el.style.borderColor = "rgba(255,255,255,.14)";
           el.style.background = `url('${url}') center/cover no-repeat`;
           el.textContent = "";
         });
@@ -554,17 +560,21 @@
       $("#gateName").textContent = CONFIG.toName;
       gateHint.textContent = "Indice : " + (CONFIG.passwordHint || "");
 
-      // bloque le scroll tant que c'est fermé
+      // verrouillage
+      document.body.classList.add("locked");
       document.body.style.overflow = "hidden";
 
       function clean(s){
         return (s||"").toLowerCase().normalize("NFKC").trim().replace(/[^a-z0-9]/g,"");
       }
       function unlock(){
+        document.body.classList.remove("locked");
         document.body.style.overflow = "";
         gate.classList.add("fadeOut");
         setTimeout(()=> gate.classList.add("hide"), 520);
-        burst(80);
+        burst(90);
+        // petit “cute” au centre
+        floatHearts(window.innerWidth/2, window.innerHeight*0.45, 18);
       }
       function deny(){
         gateError.textContent = "Mot de passe incorrect 😅";
@@ -580,24 +590,32 @@
       gateBtn.addEventListener("click", check);
       gateInput.addEventListener("keydown", (e)=>{ if(e.key==="Enter") check(); });
 
-      // clic écran = cœurs
+      // clic écran = cœurs (seulement après ouverture)
       window.addEventListener("pointerdown", (e)=>{
-        if(!gate.classList.contains("hide")) return; // pas avant déverrouillage
+        if(!gate.classList.contains("hide")) return;
         spawnHearts(e.clientX, e.clientY, 14);
-        if(Math.random()<0.55) spawnSparkle(e.clientX, e.clientY);
+        floatHearts(e.clientX, e.clientY, 7);
+        if(Math.random()<0.45) spawnSparkle(e.clientX, e.clientY);
       });
 
-      // bouton cœurs
+      // bouton cœurs = PARTOUT
       $("#btnHearts").addEventListener("click", ()=>{
-  burst(70);
-  floatHearts(window.innerWidth/2, window.innerHeight*0.45, 14);
-});
+        if(!gate.classList.contains("hide")) return;
+        burst(110);
+        for(let i=0;i<22;i++){
+          const x = Math.random() * window.innerWidth;
+          const y = Math.random() * window.innerHeight;
+          floatHearts(x, y, 7);
+          spawnHearts(x, y, 10);
+          if(Math.random()<0.4) spawnSparkle(x, y);
+        }
+      });
 
-      // musique : essaye music.mp3 si présent, sinon fait juste rien (safe)
+      // musique
       const audio = $("#musicFile");
       let playing = false;
       $("#btnMusic").addEventListener("click", async ()=>{
-        if(!gate.classList.contains("hide")) return; // seulement après déverrouillage
+        if(!gate.classList.contains("hide")) return;
         try{
           if(!playing){
             await audio.play();
@@ -607,11 +625,11 @@
             playing = false;
           }
         } catch {
-          // si music.mp3 n'existe pas ou bloqué, rien
+          // si music.mp3 absent/bloqué, rien
         }
       });
 
-      // petit burst au démarrage (derrière le portail)
+      // petite ambiance derrière le portail
       setTimeout(()=>burst(24), 400);
     });
   </script>
