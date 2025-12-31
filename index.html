@@ -241,6 +241,20 @@
     @media (prefers-reduced-motion: reduce){
       .stars::before,.stars::after,.cursor,.glow::before{animation:none !important;}
     }
+    .float-heart{
+  position: fixed;
+  left: 0; top: 0;
+  z-index: 50;
+  font-size: 22px;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+  animation: floatUp 1.8s ease forwards;
+}
+@keyframes floatUp{
+  0%{ transform: translate(-50%,-50%) scale(.8); opacity: 0; }
+  10%{ opacity: 1; }
+  100%{ transform: translate(-50%,-170px) scale(1.25); opacity: 0; }
+}
   </style>
 </head>
 <body>
@@ -311,10 +325,6 @@
         <div class="card">
           <div class="pad">
             <div class="kicker">Mini galerie</div>
-            <div class="note" style="margin-top:10px">
-              Pour afficher tes photos, elles doivent être dans le repo avec ces noms :
-              <strong>photo1.jpg</strong> … <strong>photo6.jpg</strong>.
-            </div>
             <div class="gallery" style="margin-top:12px" id="gallery">
               <div class="ph" data-i="1">Photo 1</div>
               <div class="ph" data-i="2">Photo 2</div>
@@ -364,7 +374,7 @@
       brandText: "Pour Apo ❤️",
       subtitle: "J’ai fait ce petit site comme une surprise. Un seul objectif : te faire sourire… et te rappeler à quel point tu comptes pour moi.",
       quickNote: "Apo, t’es ma personne préférée. Je pense à toi, tout le temps.",
-      promise: "Peu importe la distance, la fatigue, ou les journées compliquées : je veux être là, te soutenir, te faire rire, et t’aimer correctement. Et si un jour tu doutes, tu reviens ici… et tu relis.",
+      promise: "Je te promets une chose : je serai là. Dans les bons jours comme dans les jours compliqués. Je veux te soutenir, te respecter, te faire rire quand tu en as besoin, et te rappeler que tu es incroyable. Je veux construire avec toi, doucement mais sûrement, sans te faire douter de ce que tu vaux. Et si un jour tu te sens triste ou perdue, tu reviens ici… et tu te rappelles que je t’aime fort, et que je te choisis, chaque jour.",
       typedPhrases: ["j’ai un truc à te dire","tu es incroyable","tu me manques","je t’aime fort","je te choisis, chaque jour","Apo, t’es mon évidence"],
       loveMessageHtml: `
         Apo,<br><br>
@@ -404,6 +414,20 @@
     const hearts = [];
     const sparkles = [];
     const rand=(a,b)=>a+Math.random()*(b-a);
+    function floatHearts(x, y, n=10){
+  const emojis = ["💖","💗","💓","💞","💕","💘","✨"];
+  for(let i=0;i<n;i++){
+    const e = document.createElement("div");
+    e.className = "float-heart";
+    e.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    e.style.left = (x + (Math.random()*120-60)) + "px";
+    e.style.top  = (y + (Math.random()*40-20)) + "px";
+    e.style.fontSize = (18 + Math.random()*20) + "px";
+    e.style.animationDuration = (1.2 + Math.random()*1.0) + "s";
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(), 2200);
+  }
+}
 
     function heartPath(x,y,s,rot){
       ctx.save();
@@ -564,7 +588,10 @@
       });
 
       // bouton cœurs
-      $("#btnHearts").addEventListener("click", ()=> burst(55));
+      $("#btnHearts").addEventListener("click", ()=>{
+  burst(70);
+  floatHearts(window.innerWidth/2, window.innerHeight*0.45, 14);
+});
 
       // musique : essaye music.mp3 si présent, sinon fait juste rien (safe)
       const audio = $("#musicFile");
