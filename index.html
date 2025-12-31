@@ -7,17 +7,13 @@
   <title>Pour Apo ❤️</title>
   <style>
     :root{
-      --bg1:#0b1020;
-      --bg2:#1a0f1d;
-      --txt:#f8f7ff;
-      --muted:rgba(248,247,255,.75);
-      --pink:#ff4d6d;
-      --pink2:#ff7aa2;
+      --bg1:#0b1020; --bg2:#1a0f1d;
+      --txt:#f8f7ff; --muted:rgba(248,247,255,.75);
+      --pink:#ff4d6d; --pink2:#ff7aa2;
       --border:rgba(255,255,255,.16);
       --shadow: 0 20px 70px rgba(0,0,0,.55);
       --r: 22px;
     }
-
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
@@ -30,11 +26,9 @@
       overflow-x:hidden;
     }
 
-    /* fond animé doux */
     .glow{position:fixed; inset:-80px; pointer-events:none; opacity:.55; filter: blur(30px); z-index:0;}
     .glow::before{
-      content:"";
-      position:absolute; inset:0;
+      content:""; position:absolute; inset:0;
       background:
         radial-gradient(600px 420px at 20% 20%, rgba(255,77,109,.22), transparent 60%),
         radial-gradient(540px 420px at 85% 25%, rgba(255,122,162,.18), transparent 60%),
@@ -43,11 +37,9 @@
     }
     @keyframes floaty{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(-10px,14px,0)}}
 
-    /* étoiles */
-    .stars{position:fixed; inset:0; pointer-events:none; opacity:.8; filter: drop-shadow(0 0 10px rgba(255,255,255,.05)); z-index:1;}
+    .stars{position:fixed; inset:0; pointer-events:none; opacity:.8; z-index:1;}
     .stars::before, .stars::after{
-      content:"";
-      position:absolute; inset:-200px;
+      content:""; position:absolute; inset:-200px;
       background-image:
         radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.7) 50%, transparent 55%),
         radial-gradient(1px 1px at 140px 120px, rgba(255,255,255,.55) 50%, transparent 55%),
@@ -66,7 +58,8 @@
     .stars::after{animation-duration: 28s; opacity:.35; transform: translate3d(0,-60px,0) scale(1.2)}
     @keyframes drift{from{transform:translate3d(0,0,0)} to{transform:translate3d(-140px,120px,0)}}
 
-    /* layout */
+    canvas#fx{position:fixed; inset:0; pointer-events:none; z-index:2;}
+
     .wrap{position:relative; min-height:100%; z-index:3;}
     header{
       position:sticky; top:0; z-index:10;
@@ -75,25 +68,16 @@
       border-bottom:1px solid rgba(255,255,255,.10);
     }
     .topbar{
-      max-width:1100px;
-      margin:0 auto;
-      padding:14px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
+      max-width:1100px; margin:0 auto; padding:14px 18px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
     }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:800; letter-spacing:.2px;
-    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:900;}
     .brand .dot{
       width:12px;height:12px;border-radius:999px;
       background: radial-gradient(circle at 30% 30%, #fff, var(--pink));
       box-shadow: 0 0 0 6px rgba(255,77,109,.12);
     }
     .controls{display:flex; gap:10px; align-items:center;}
-
     .pill{
       border:1px solid var(--border);
       background: rgba(255,255,255,.06);
@@ -101,7 +85,7 @@
       padding:10px 12px;
       border-radius:999px;
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
       display:flex; align-items:center; gap:8px;
       transition: transform .18s ease, background .18s ease, border-color .18s ease;
       user-select:none;
@@ -110,7 +94,6 @@
     .pill:active{transform: translateY(0)}
 
     main{max-width:1100px; margin:0 auto; padding:36px 18px 90px;}
-
     .hero{display:grid; grid-template-columns: 1.2fr .8fr; gap:18px; align-items:stretch;}
     @media (max-width: 900px){.hero{grid-template-columns:1fr;}}
 
@@ -121,7 +104,6 @@
       box-shadow: var(--shadow);
       overflow:hidden;
       position:relative;
-      transform: translateZ(0);
     }
     .card::before{
       content:"";
@@ -131,20 +113,17 @@
       pointer-events:none;
       opacity:.9;
     }
-    .card:hover{border-color: rgba(255,255,255,.18)}
-
     .pad{position:relative; padding:22px;}
-    .kicker{color:var(--muted); font-weight:700; letter-spacing:.16em; text-transform:uppercase; font-size:.78rem;}
+    .kicker{color:var(--muted); font-weight:800; letter-spacing:.16em; text-transform:uppercase; font-size:.78rem;}
     h1{margin:10px 0 8px; font-size: clamp(1.9rem, 3.6vw, 3rem); line-height:1.08;}
     .sub{color:var(--muted); font-size:1.02rem; line-height:1.6; margin:0 0 18px;}
 
     .type{
-      font-weight:900;
+      font-weight:1000;
       background: linear-gradient(90deg, #fff, var(--pink2));
       -webkit-background-clip:text;
       background-clip:text;
       color:transparent;
-      position:relative;
     }
     .cursor{display:inline-block; width:10px; height:1.1em; margin-left:6px; transform: translateY(3px);
       background: rgba(255,255,255,.75); animation: blink 1s steps(1) infinite; border-radius:2px;}
@@ -158,14 +137,11 @@
       padding:12px 14px;
       border-radius:14px;
       cursor:pointer;
-      font-weight:900;
-      letter-spacing:.2px;
+      font-weight:1000;
       box-shadow: 0 14px 40px rgba(255,77,109,.22);
       transition: transform .18s ease, filter .18s ease;
     }
     .btn:hover{transform: translateY(-1px); filter: brightness(1.03)}
-    .btn:active{transform: translateY(0)}
-
     .ghost{
       border:1px solid rgba(255,255,255,.18);
       background: rgba(255,255,255,.06);
@@ -174,128 +150,96 @@
       border-radius:14px;
       cursor:pointer;
       font-weight:900;
-      transition: background .18s ease, transform .18s ease;
     }
-    .ghost:hover{background: rgba(255,255,255,.10); transform: translateY(-1px)}
-
-    .side{display:grid; grid-template-rows: 1fr auto; min-height: 320px;}
-
-    .ring{
-      position:absolute;
-      width:210px;height:210px;
-      border-radius:999px;
-      border: 1px solid rgba(255,255,255,.18);
-      right:-60px; top:-70px;
-      opacity:.55;
-      transform: rotate(12deg);
-    }
-    .ring::after{
-      content:"";
-      position:absolute; inset:18px;
-      border-radius:999px;
-      border:1px dashed rgba(255,255,255,.22);
-      opacity:.8;
-      animation: spin 18s linear infinite;
-    }
-    @keyframes spin{to{transform: rotate(360deg)}}
-
-    .mini{display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;}
-    .chip{
-      padding:8px 10px;
-      border-radius:999px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.14);
-      color:var(--muted);
-      font-weight:800;
-      font-size:.85rem;
-    }
-
-    .grid{margin-top:18px; display:grid; grid-template-columns: 1fr 1fr; gap:18px;}
-    @media (max-width: 900px){.grid{grid-template-columns:1fr;}}
-
-    .section-title{display:flex; align-items:center; justify-content:space-between; gap:10px; margin:0 0 10px;}
-    .section-title h2{margin:0; font-size:1.25rem;}
-    .small{color:var(--muted); font-size:.92rem;}
+    .hint{color:rgba(248,247,255,.55); font-size:.88rem; margin-top:10px}
 
     .note{margin-top:10px; padding:14px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); border-radius: 16px; color: var(--muted); line-height:1.6;}
-
-    .timeline{display:grid; gap:12px; margin-top:12px;}
-    .step{display:flex; gap:12px; align-items:flex-start; padding:14px; border-radius: 18px; border:1px solid rgba(255,255,255,.14); background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.05));}
-    .badge{width:38px; height:38px; border-radius: 14px; display:grid; place-items:center; font-weight:1000; background: rgba(255,77,109,.18); border:1px solid rgba(255,77,109,.38); box-shadow: 0 18px 50px rgba(255,77,109,.18); flex: 0 0 auto;}
-    .step h3{margin:0 0 3px; font-size:1.02rem;}
-    .step p{margin:0; color:var(--muted); line-height:1.55}
+    .grid{margin-top:18px; display:grid; grid-template-columns: 1fr 1fr; gap:18px;}
+    @media (max-width: 900px){.grid{grid-template-columns:1fr;}}
 
     .gallery{display:grid; grid-template-columns: repeat(3, 1fr); gap:10px;}
     @media (max-width: 900px){.gallery{grid-template-columns: repeat(2, 1fr);}}
     @media (max-width: 460px){.gallery{grid-template-columns: 1fr;}}
 
-    .ph{aspect-ratio: 4 / 3; border-radius: 18px; border:1px dashed rgba(255,255,255,.22); background: rgba(255,255,255,.04); display:grid; place-items:center; color: rgba(248,247,255,.65); font-weight:800; position:relative; overflow:hidden;}
-    .ph::before{content:""; position:absolute; inset:-2px; background: radial-gradient(400px 220px at 30% 10%, rgba(255,77,109,.18), transparent 55%), radial-gradient(420px 260px at 80% 30%, rgba(255,122,162,.14), transparent 55%); opacity: .9; pointer-events:none;}
+    .ph{
+      aspect-ratio: 4 / 3;
+      border-radius: 18px;
+      border:1px dashed rgba(255,255,255,.22);
+      background: rgba(255,255,255,.04);
+      display:grid; place-items:center;
+      color: rgba(248,247,255,.65);
+      font-weight:900;
+      position:relative; overflow:hidden;
+    }
+    .ph::before{
+      content:""; position:absolute; inset:-2px;
+      background: radial-gradient(400px 220px at 30% 10%, rgba(255,77,109,.18), transparent 55%),
+                  radial-gradient(420px 260px at 80% 30%, rgba(255,122,162,.14), transparent 55%);
+      opacity: .9; pointer-events:none;
+    }
 
     /* modal */
     .overlay{position:fixed; inset:0; background: rgba(0,0,0,.6); backdrop-filter: blur(10px); display:none; align-items:center; justify-content:center; padding:18px; z-index:999;}
     .overlay.show{display:flex;}
-    .modal{width:min(760px, 100%); border-radius: 26px; border:1px solid rgba(255,255,255,.18); background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.07)); box-shadow: 0 30px 100px rgba(0,0,0,.6); overflow:hidden; position:relative;}
+    .modal{width:min(760px, 100%); border-radius: 26px; border:1px solid rgba(255,255,255,.18); background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.07)); box-shadow: 0 30px 100px rgba(0,0,0,.6); overflow:hidden;}
     .modal .head{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:16px 18px; border-bottom:1px solid rgba(255,255,255,.12);}
     .x{width:42px;height:42px; border-radius: 14px; border:1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); color:var(--txt); cursor:pointer; font-weight:1000;}
     .modal .body{padding:18px; color:var(--muted); line-height:1.7; font-size:1.02rem;}
-    .signature{margin-top:14px; color:rgba(248,247,255,.88); font-weight:900}
-
-    /* effets */
-    canvas#fx{position:fixed; inset:0; pointer-events:none; z-index:2;}
-    .hint{color:rgba(248,247,255,.55); font-size:.88rem; margin-top:10px}
-
-    footer{position:relative; max-width:1100px; margin:0 auto; padding:18px; color: rgba(248,247,255,.55); text-align:center;}
-    a{color:inherit}
+    .signature{margin-top:14px; color:rgba(248,247,255,.88); font-weight:1000}
 
     /* 🔒 gate */
-    .gate{position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:18px;
+    .gate{
+      position:fixed; inset:0; z-index:1000;
+      display:flex; align-items:center; justify-content:center; padding:18px;
       background: radial-gradient(900px 500px at 20% 10%, rgba(255,77,109,.22), transparent 60%),
                   radial-gradient(800px 520px at 80% 20%, rgba(255,122,162,.18), transparent 60%),
                   rgba(0,0,0,.62);
       backdrop-filter: blur(14px);
     }
     .gate.hide{display:none;}
-    .gate-card{width:min(520px, 100%); border-radius: 26px; border:1px solid rgba(255,255,255,.18);
+    .gate-card{
+      width:min(520px, 100%);
+      border-radius: 26px;
+      border:1px solid rgba(255,255,255,.18);
       background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
       box-shadow: 0 30px 110px rgba(0,0,0,.7);
       padding:20px; position:relative; overflow:hidden;
     }
-    .gate-card::before{content:""; position:absolute; inset:-1px;
+    .gate-card::before{
+      content:""; position:absolute; inset:-1px;
       background: radial-gradient(600px 220px at 20% 0%, rgba(255,77,109,.28), transparent 60%),
                   radial-gradient(520px 240px at 90% 20%, rgba(255,122,162,.20), transparent 60%);
       opacity:.95; pointer-events:none;
     }
     .gate-card > *{position:relative;}
-    .gate-badge{width:54px; height:54px; border-radius: 18px; display:grid; place-items:center;
+    .gate-badge{
+      width:54px; height:54px; border-radius: 18px; display:grid; place-items:center;
       background: rgba(255,77,109,.18); border:1px solid rgba(255,77,109,.40);
-      box-shadow: 0 18px 60px rgba(255,77,109,.22); font-size:1.25rem;
+      box-shadow: 0 18px 60px rgba(255,77,109,.22);
+      font-size:1.25rem;
     }
     .gate-card h2{margin:12px 0 8px; font-size:1.55rem;}
     .gate-card p{margin:0 0 14px; color:rgba(248,247,255,.75); line-height:1.6;}
     .gate-row{display:flex; gap:10px; align-items:center;}
-    .gate-row input{flex:1; padding:12px 12px; border-radius: 16px; border:1px solid rgba(255,255,255,.18);
+    .gate-row input{
+      flex:1; padding:12px 12px; border-radius: 16px; border:1px solid rgba(255,255,255,.18);
       background: rgba(0,0,0,.22); color: var(--txt); outline:none; font-weight:900; letter-spacing:.2px;
     }
-    .gate-row input:focus{border-color: rgba(255,122,162,.55); box-shadow: 0 0 0 6px rgba(255,77,109,.12);}
-    .gate-row button{padding:12px 14px; border-radius: 16px; border:none;
-      background: linear-gradient(90deg, var(--pink), var(--pink2)); color:#1a0f1d; font-weight:1000; cursor:pointer;
-      box-shadow: 0 16px 60px rgba(255,77,109,.22); transition: transform .18s ease, filter .18s ease; white-space:nowrap;
+    .gate-row button{
+      padding:12px 14px; border-radius: 16px; border:none;
+      background: linear-gradient(90deg, var(--pink), var(--pink2));
+      color:#1a0f1d; font-weight:1000; cursor:pointer; white-space:nowrap;
+      box-shadow: 0 16px 60px rgba(255,77,109,.22);
     }
-    .gate-row button:hover{transform: translateY(-1px); filter: brightness(1.03)}
-    .gate-row button:active{transform: translateY(0)}
     .gate-hint{margin-top:10px; color:rgba(248,247,255,.60); font-size:.92rem;}
-    .gate-error{margin-top:10px; color:rgba(255,200,210,.95); font-weight:900; min-height:22px;}
-    .gate-small{margin-top:12px; color:rgba(248,247,255,.55); font-size:.85rem;}
-
+    .gate-error{margin-top:10px; color:rgba(255,200,210,.95); font-weight:1000; min-height:22px;}
     .shake{animation: shake .38s ease;}
     @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
-
     .fadeOut{animation: fadeOut .55s ease forwards;}
     @keyframes fadeOut{to{opacity:0; transform: translateY(10px);}}
 
     @media (prefers-reduced-motion: reduce){
-      .stars::before,.stars::after,.ring::after,.cursor,.shake,.fadeOut,.glow::before{animation:none !important;}
+      .stars::before,.stars::after,.cursor,.glow::before{animation:none !important;}
     }
   </style>
 </head>
@@ -307,33 +251,30 @@
   <div class="wrap">
     <header>
       <div class="topbar">
-        <div class="brand" title="Un petit site juste pour toi">
+        <div class="brand">
           <span class="dot"></span>
           <span id="brandText">Pour Apo ❤️</span>
         </div>
         <div class="controls">
-          <button class="pill" id="btnHearts" title="Lancer une pluie de cœurs">💘 Cœurs</button>
-          <button class="pill" id="btnMusic" title="Activer / couper la musique">🎵 Musique</button>
-          <button class="pill" id="btnShare" title="Copier le lien">🔗 Lien</button>
+          <button class="pill" id="btnHearts">💘 Cœurs</button>
+          <button class="pill" id="btnMusic">🎵 Musique</button>
         </div>
       </div>
     </header>
 
-    <!-- 🔒 ÉCRAN MOT DE PASSE -->
-    <div class="gate" id="gate" aria-label="Accès privé">
+    <!-- 🔒 Portail -->
+    <div class="gate" id="gate">
       <div class="gate-card">
         <div class="gate-badge">🔒</div>
         <h2>Accès privé</h2>
         <p>Ce petit site est réservé à <strong id="gateName">Apo</strong>.<br>Entre le mot de passe pour ouvrir la surprise ✨</p>
-
         <div class="gate-row">
           <input id="gateInput" type="password" autocomplete="off" placeholder="Mot de passe" />
           <button id="gateBtn">Ouvrir 💗</button>
         </div>
         <div class="gate-hint" id="gateHint"></div>
         <div class="gate-error" id="gateError"></div>
-
-        <div class="gate-small">Astuce : active la musique en haut quand c’est ouvert 🎵</div>
+        <div class="hint">Astuce : active la musique en haut quand c’est ouvert 🎵</div>
       </div>
     </div>
 
@@ -346,39 +287,22 @@
               <span id="toName">Apo</span>,
               <span class="type" id="typed">j’ai un truc à te dire</span><span class="cursor" aria-hidden="true"></span>
             </h1>
-            <p class="sub" id="subtitle">
-              J’ai fait ce petit site comme une surprise. Un seul objectif : te faire sourire… et te rappeler à quel point tu comptes pour moi.
-            </p>
-
+            <p class="sub" id="subtitle">J’ai fait ce petit site comme une surprise. Un seul objectif : te faire sourire… et te rappeler à quel point tu comptes pour moi.</p>
             <div class="btns">
               <button class="btn" id="btnOpen">Ouvre mon message 💌</button>
-              <button class="ghost" id="btnScroll">Descends un peu ↓</button>
+              <button class="ghost" id="btnScroll">Descends ↓</button>
             </div>
-            <div class="hint">Astuce : clique sur « Cœurs » en haut et touche l’écran 👆</div>
+            <div class="hint">Clique sur l’écran pour faire apparaître des cœurs 💗</div>
           </div>
         </div>
 
-        <div class="card side">
+        <div class="card">
           <div class="pad">
-            <div class="ring" aria-hidden="true"></div>
             <div class="kicker">Nous</div>
-            <h2 style="margin:10px 0 8px; font-size:1.45rem; line-height:1.15;">
+            <h2 style="margin:10px 0 8px; font-size:1.45rem;">
               <span id="pairA">Apo</span> × <span id="pairB">Nadhem</span>
             </h2>
-            <p class="sub" style="margin:0 0 10px;">
-              Une équipe. Des fous rires. Des souvenirs. Et tout ce qu’on va encore construire.
-            </p>
-            <div class="mini">
-              <span class="chip">💗 tendresse</span>
-              <span class="chip">😂 rires</span>
-              <span class="chip">🌙 complicité</span>
-              <span class="chip">✨ avenir</span>
-            </div>
-          </div>
-          <div class="pad" style="padding-top:0;">
-            <div class="note" id="quickNote">
-              Apo, t’es ma personne préférée. Je pense à toi, tout le temps.
-            </div>
+            <div class="note" id="quickNote">Apo, t’es ma personne préférée. Je pense à toi, tout le temps.</div>
           </div>
         </div>
       </section>
@@ -386,32 +310,12 @@
       <section class="grid">
         <div class="card">
           <div class="pad">
-            <div class="section-title">
-              <h2>Pourquoi je t’aime</h2>
-              <div class="small">(petites preuves)</div>
+            <div class="kicker">Mini galerie</div>
+            <div class="note" style="margin-top:10px">
+              Pour afficher tes photos, elles doivent être dans le repo avec ces noms :
+              <strong>photo1.jpg</strong> … <strong>photo6.jpg</strong>.
             </div>
-
-            <div class="timeline" id="timeline">
-              <div class="step"><div class="badge">1</div><div><h3>Ta présence</h3><p>Avec toi, même les journées normales deviennent plus belles.</p></div></div>
-              <div class="step"><div class="badge">2</div><div><h3>Ton sourire</h3><p>Il me calme, il me rassure, et il me rend heureux sans effort.</p></div></div>
-              <div class="step"><div class="badge">3</div><div><h3>Ta force</h3><p>J’admire qui tu es et tout ce que tu fais. Vraiment.</p></div></div>
-              <div class="step"><div class="badge">4</div><div><h3>Nous deux</h3><p>Je me sens à ma place, et je veux continuer encore longtemps.</p></div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="pad">
-            <div class="section-title">
-              <h2>Mini galerie</h2>
-              <div class="small">Ajoute vos photos</div>
-            </div>
-
-            <div class="note" style="margin-top:0;">
-              Tu peux remplacer ces cases par vos photos : c’est expliqué dans le code (juste en bas).
-            </div>
-
-            <div class="gallery" style="margin-top:12px;" id="gallery">
+            <div class="gallery" style="margin-top:12px" id="gallery">
               <div class="ph" data-i="1">Photo 1</div>
               <div class="ph" data-i="2">Photo 2</div>
               <div class="ph" data-i="3">Photo 3</div>
@@ -419,90 +323,63 @@
               <div class="ph" data-i="5">Photo 5</div>
               <div class="ph" data-i="6">Photo 6</div>
             </div>
-
-            <div class="note">
-              <strong>Option rapide :</strong> tu peux juste garder ce site comme message (sans photos) et l’envoyer tel quel.
-            </div>
           </div>
         </div>
-      </section>
 
-      <section class="card" style="margin-top:18px;">
-        <div class="pad">
-          <div class="section-title">
-            <h2>Une promesse</h2>
-            <div class="small">(simple, mais vraie)</div>
+        <div class="card">
+          <div class="pad">
+            <div class="kicker">Une promesse</div>
+            <p class="sub" id="promise" style="margin-top:10px">
+              Peu importe la distance, la fatigue, ou les journées compliquées : je veux être là, te soutenir, te faire rire, et t’aimer correctement.
+              Et si un jour tu doutes, tu reviens ici… et tu relis.
+            </p>
           </div>
-          <p class="sub" id="promise" style="margin:0;">
-            Peu importe la distance, la fatigue, ou les journées compliquées : je veux être là, te soutenir, te faire rire, et t’aimer correctement.
-            Et si un jour tu doutes, tu reviens ici… et tu relis.
-          </p>
         </div>
       </section>
     </main>
 
-    
-  </div>
-
-  <!-- MODAL -->
-  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Message d'amour">
-    <div class="modal">
-      <div class="head">
-        <div style="font-weight:1000">💌 Mon message</div>
-        <button class="x" id="btnClose" aria-label="Fermer">✕</button>
-      </div>
-      <div class="body" id="loveText">
-        <div id="loveBody"></div>
-        <div class="signature">— <span id="sig"></span></div>
+    <!-- MODAL -->
+    <div class="overlay" id="overlay" role="dialog" aria-modal="true">
+      <div class="modal">
+        <div class="head">
+          <div style="font-weight:1000">💌 Mon message</div>
+          <button class="x" id="btnClose">✕</button>
+        </div>
+        <div class="body">
+          <div id="loveBody"></div>
+          <div class="signature">— <span id="sig"></span></div>
+        </div>
       </div>
     </div>
+
+    <!-- Musique optionnelle (si tu ajoutes un fichier music.mp3 dans le repo) -->
+    <audio id="musicFile" src="music.mp3" preload="auto"></audio>
   </div>
 
   <script>
-    /********************
-     *  PERSONNALISATION
-     *  Modifie juste ici 👇
-     ********************/
+    // ✅ CONFIG (modifie ici si tu veux)
     const CONFIG = {
       toName: "Apo",
       fromName: "Nadhem",
       brandText: "Pour Apo ❤️",
-      quickNote: "Apo, t’es ma personne préférée. Je pense à toi, tout le temps.",
       subtitle: "J’ai fait ce petit site comme une surprise. Un seul objectif : te faire sourire… et te rappeler à quel point tu comptes pour moi.",
+      quickNote: "Apo, t’es ma personne préférée. Je pense à toi, tout le temps.",
       promise: "Peu importe la distance, la fatigue, ou les journées compliquées : je veux être là, te soutenir, te faire rire, et t’aimer correctement. Et si un jour tu doutes, tu reviens ici… et tu relis.",
-
-      typedPhrases: [
-        "j’ai un truc à te dire",
-        "tu es incroyable",
-        "tu me manques",
-        "je t’aime fort",
-        "et je te choisis, chaque jour",
-        "Apo, t’es mon évidence"
-      ],
-
+      typedPhrases: ["j’ai un truc à te dire","tu es incroyable","tu me manques","je t’aime fort","je te choisis, chaque jour","Apo, t’es mon évidence"],
       loveMessageHtml: `
         Apo,<br><br>
         Je voulais te dire quelque chose de vrai.<br>
         Avec toi, tout devient plus doux : mes journées, mes pensées, ma vie.<br><br>
-
-        J’aime ta façon d’être, ton sourire, ta présence… et même tes petites manies.
-        J’aime nos moments simples, nos délires, et cette complicité qu’on a.
-        <br><br>
-
-        Je te promets de te respecter, de te protéger, et de t’aimer comme tu le mérites.
-        Et si un jour tu doutes de toi, je serai là pour te rappeler qui tu es :
-        <strong>une fille incroyable.</strong>
-        <br><br>
-
+        J’aime ta façon d’être, ton sourire, ta présence… et même tes petites manies.<br>
+        J’aime nos moments simples, nos délires, et cette complicité qu’on a.<br><br>
+        Je te promets de te respecter, de te protéger, et de t’aimer comme tu le mérites.<br>
+        Et si un jour tu doutes de toi, je serai là pour te rappeler qui tu es : <strong>une fille incroyable.</strong><br><br>
         <strong>Je t’aime fort ❤️</strong>
       `,
-
-      // 🔒 ACCÈS PRIVÉ
+      // 🔒 mot de passe
       password: "nadhem&apo",
       passwordHint: "nos prénoms avec &",
-
-      // PHOTOS (option)
-      // Mets tes images dans le même dossier que ce fichier, renomme: photo1.jpg ... photo6.jpg
+      // 📸 photos
       usePhotos: true,
       photoPrefix: "photo",
       photoExt: ".jpg"
@@ -511,24 +388,22 @@
     const $ = (q) => document.querySelector(q);
     const $$ = (q) => Array.from(document.querySelectorAll(q));
 
-    /********************
-     *  CANVAS FX (cœurs + étoiles filantes)
-     ********************/
+    // Canvas FX
     const canvas = $("#fx");
-    const ctx = canvas.getContext('2d');
-    let W, H;
+    const ctx = canvas.getContext("2d");
+    let W=0,H=0;
     function resize(){
       W = canvas.width = window.innerWidth * devicePixelRatio;
       H = canvas.height = window.innerHeight * devicePixelRatio;
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
     }
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
     resize();
 
     const hearts = [];
     const sparkles = [];
-    function rand(a,b){ return a + Math.random()*(b-a); }
+    const rand=(a,b)=>a+Math.random()*(b-a);
 
     function heartPath(x,y,s,rot){
       ctx.save();
@@ -542,55 +417,38 @@
       ctx.closePath();
       ctx.restore();
     }
-
-    function spawnHearts(x,y, n=10){
+    function spawnHearts(x,y,n=10){
       for(let i=0;i<n;i++){
         hearts.push({
-          x: x * devicePixelRatio,
-          y: y * devicePixelRatio,
-          vx: rand(-1.25,1.25) * devicePixelRatio,
-          vy: rand(-3.6,-1.7) * devicePixelRatio,
-          g: rand(0.05,0.11) * devicePixelRatio,
-          s: rand(6,14) * devicePixelRatio,
+          x:x*devicePixelRatio, y:y*devicePixelRatio,
+          vx: rand(-1.25,1.25)*devicePixelRatio,
+          vy: rand(-3.6,-1.7)*devicePixelRatio,
+          g: rand(0.05,0.11)*devicePixelRatio,
+          s: rand(6,14)*devicePixelRatio,
           rot: rand(-0.6,0.6),
           vr: rand(-0.03,0.03),
           life: rand(55,95)
         });
       }
     }
-
-    function burst(n=36){
-      spawnHearts(window.innerWidth/2, window.innerHeight*0.32, n);
-      for(let i=0;i<14;i++){
-        sparkles.push({
-          x: rand(0, W),
-          y: rand(0, H*0.35),
-          vx: rand(-5.5,-3.0) * devicePixelRatio,
-          vy: rand(2.0,4.5) * devicePixelRatio,
-          life: rand(28,45)
-        });
-      }
-    }
-
     function spawnSparkle(x,y){
       sparkles.push({
-        x: x * devicePixelRatio,
-        y: y * devicePixelRatio,
-        vx: rand(-6.2,-3.0) * devicePixelRatio,
-        vy: rand(2.2,5.0) * devicePixelRatio,
+        x:x*devicePixelRatio, y:y*devicePixelRatio,
+        vx: rand(-6.2,-3.0)*devicePixelRatio,
+        vy: rand(2.2,5.0)*devicePixelRatio,
         life: rand(24,40)
       });
     }
-
+    function burst(n=36){
+      spawnHearts(window.innerWidth/2, window.innerHeight*0.32, n);
+      for(let i=0;i<10;i++) sparkles.push({x:rand(0,W), y:rand(0,H*0.35), vx:rand(-5.5,-3)*devicePixelRatio, vy:rand(2,4.5)*devicePixelRatio, life:rand(28,45)});
+    }
     function loop(){
       ctx.clearRect(0,0,W,H);
 
-      // sparkles
       for(let i=sparkles.length-1;i>=0;i--){
         const s = sparkles[i];
-        s.x += s.vx;
-        s.y += s.vy;
-        s.life -= 1;
+        s.x += s.vx; s.y += s.vy; s.life--;
         const a = Math.max(0, Math.min(1, s.life/40));
         ctx.lineWidth = 2.2 * devicePixelRatio;
         ctx.strokeStyle = `rgba(255,255,255,${0.55*a})`;
@@ -598,317 +456,137 @@
         ctx.moveTo(s.x, s.y);
         ctx.lineTo(s.x + 18*devicePixelRatio, s.y - 10*devicePixelRatio);
         ctx.stroke();
-        if(s.life <= 0 || s.x < -80*devicePixelRatio || s.y > H + 80*devicePixelRatio) sparkles.splice(i,1);
+        if(s.life<=0 || s.x < -80*devicePixelRatio || s.y > H + 80*devicePixelRatio) sparkles.splice(i,1);
       }
 
-      // hearts
       for(let i=hearts.length-1;i>=0;i--){
         const p = hearts[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += p.g;
-        p.rot += p.vr;
-        p.life -= 1;
-        const alpha = Math.max(0, Math.min(1, p.life/80));
-
-        ctx.fillStyle = `rgba(255, 77, 109, ${0.16*alpha})`;
-        heartPath(p.x, p.y+4*devicePixelRatio, p.s*0.06, p.rot);
-        ctx.fill();
-
-        ctx.fillStyle = `rgba(255, 122, 162, ${0.85*alpha})`;
-        heartPath(p.x, p.y, p.s*0.06, p.rot);
-        ctx.fill();
-
-        if(p.life <= 0 || p.y > H + 60*devicePixelRatio) hearts.splice(i,1);
+        p.x += p.vx; p.y += p.vy; p.vy += p.g; p.rot += p.vr; p.life--;
+        const a = Math.max(0, Math.min(1, p.life/80));
+        ctx.fillStyle = `rgba(255, 77, 109, ${0.16*a})`;
+        heartPath(p.x, p.y+4*devicePixelRatio, p.s*0.06, p.rot); ctx.fill();
+        ctx.fillStyle = `rgba(255, 122, 162, ${0.85*a})`;
+        heartPath(p.x, p.y, p.s*0.06, p.rot); ctx.fill();
+        if(p.life<=0 || p.y > H + 60*devicePixelRatio) hearts.splice(i,1);
       }
 
       requestAnimationFrame(loop);
     }
     loop();
 
-    /********************
-     *  TOAST (mini notif)
-     ********************/
-    const t = document.createElement('div');
-    t.style.cssText = `
-      position:fixed; left:50%; bottom:22px; transform:translateX(-50%);
-      padding:12px 14px; border-radius: 999px;
-      background: rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.18);
-      color: rgba(248,247,255,.9);
-      backdrop-filter: blur(10px);
-      z-index:9999;
-      opacity:0;
-      transition: opacity .2s ease, transform .2s ease;
-      font-weight:900;
-    `;
-    document.body.appendChild(t);
-    let toastTimer;
-    function toast(msg){
-      t.textContent = msg;
-      t.style.opacity = '1';
-      t.style.transform = 'translateX(-50%) translateY(-2px)';
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(()=>{
-        t.style.opacity = '0';
-        t.style.transform = 'translateX(-50%) translateY(0px)';
-      }, 1700);
-    }
+    // INIT + GATE (après chargement)
+    window.addEventListener("DOMContentLoaded", () => {
+      $("#brandText").textContent = CONFIG.brandText;
+      $("#toName").textContent = CONFIG.toName;
+      $("#pairA").textContent = CONFIG.toName;
+      $("#pairB").textContent = CONFIG.fromName;
+      $("#subtitle").textContent = CONFIG.subtitle;
+      $("#quickNote").textContent = CONFIG.quickNote;
+      $("#promise").textContent = CONFIG.promise;
+      $("#sig").textContent = CONFIG.fromName;
+      $("#loveBody").innerHTML = CONFIG.loveMessageHtml;
 
-    /********************
-     *  INIT UI
-     ********************/
-    $("#toName").textContent = CONFIG.toName;
-    $("#fromName").textContent = CONFIG.fromName;
-    $("#sig").textContent = CONFIG.fromName;
-    $("#pairA").textContent = CONFIG.toName;
-    $("#pairB").textContent = CONFIG.fromName;
-    $("#brandText").textContent = CONFIG.brandText;
-    $("#quickNote").textContent = CONFIG.quickNote;
-    $("#subtitle").textContent = CONFIG.subtitle;
-    $("#promise").textContent = CONFIG.promise;
-    $("#loveBody").innerHTML = CONFIG.loveMessageHtml;
+      // Modal
+      const overlay = $("#overlay");
+      $("#btnOpen").addEventListener("click", ()=>{ overlay.classList.add("show"); burst(40); });
+      $("#btnClose").addEventListener("click", ()=> overlay.classList.remove("show"));
+      overlay.addEventListener("click", (e)=>{ if(e.target===overlay) overlay.classList.remove("show"); });
 
-    const now = new Date();
-    const fmt = new Intl.DateTimeFormat('fr-FR', { year:'numeric', month:'long', day:'numeric' });
-    $("#today").textContent = fmt.format(now);
+      $("#btnScroll").addEventListener("click", ()=> window.scrollTo({top: window.innerHeight*0.9, behavior:"smooth"}));
 
-    /********************
-     *  🔒 GATE (mot de passe)
-     ********************/
-    const gate = document.getElementById('gate');
-    const gateName = document.getElementById('gateName');
-    const gateInput = document.getElementById('gateInput');
-    const gateBtn = document.getElementById('gateBtn');
-    const gateHint = document.getElementById('gateHint');
-    const gateError = document.getElementById('gateError');
-
-    gateName.textContent = CONFIG.toName;
-    gateHint.textContent = "Indice : " + (CONFIG.passwordHint || "");
-    const KEY = "love_site_unlocked_v1";
-    function isUnlocked(){
-      try{ return localStorage.getItem(KEY) === '1'; } catch { return false; }
-    }
-    function unlock(){
-      try{ localStorage.setItem(KEY, '1'); } catch {}
-      gate.classList.add('fadeOut');
-      setTimeout(()=>{ gate.classList.add('hide'); }, 520);
-      setTimeout(()=>burst(80), 280);
-      toast('Bienvenue Apo ❤️');
-    }
-    function deny(){
-      gateError.textContent = "Mot de passe incorrect 😅";
-      gate.classList.remove('shake');
-      void gate.offsetWidth;
-      gate.classList.add('shake');
-      spawnHearts(window.innerWidth/2, window.innerHeight*0.55, 18);
-      spawnSparkle(window.innerWidth/2, window.innerHeight*0.55);
-    }
-      function normalizePwd(s){
-      return (s || "")
-      .normalize("NFKC")      // évite les caractères “bizarres”
-      .trim()                // enlève espaces début/fin
-      .replace(/\s+/g, "");  // enlève tous les espaces
-    }
-
-     function clean(s){
-  return (s || "")
-    .toLowerCase()
-    .normalize("NFKC")
-    .trim()
-    .replace(/[^a-z0-9]/g, ""); // enlève &, espaces, etc.
-}
-
-function check(){
-  const v = clean(gateInput.value);
-  const p = clean(CONFIG.password);
-
-  // accepte aussi "nadhemapo" même si tu tapes avec le &
-  if(v === p) unlock();
-  else deny();
-}
-    gateBtn.addEventListener('click', check);
-    gateInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') check(); });
-
-    if(isUnlocked()) gate.classList.add('hide');
-
-    /********************
-     *  TYPEWRITER
-     ********************/
-    const typedEl = $("#typed");
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
-
-    function tick(){
-      const phrase = CONFIG.typedPhrases[phraseIndex % CONFIG.typedPhrases.length];
-      if(!deleting){
-        charIndex++;
-        typedEl.textContent = phrase.slice(0, charIndex);
-        if(charIndex >= phrase.length){
-          deleting = true;
-          setTimeout(tick, 1100);
-          return;
-        }
-      } else {
-        charIndex--;
-        typedEl.textContent = phrase.slice(0, charIndex);
-        if(charIndex <= 0){
-          deleting = false;
-          phraseIndex++;
-        }
-      }
-      const speed = deleting ? 35 : 52;
-      setTimeout(tick, speed);
-    }
-    tick();
-
-    /********************
-     *  MODAL
-     ********************/
-    const overlay = $("#overlay");
-    function openModal(){
-      overlay.classList.add("show");
-      burst(40);
-    }
-    function closeModal(){ overlay.classList.remove("show"); }
-
-    $("#btnOpen").addEventListener("click", openModal);
-    $("#btnClose").addEventListener("click", closeModal);
-    overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeModal(); });
-    window.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeModal(); });
-
-    /********************
-     *  SCROLL
-     ********************/
-    $("#btnScroll").addEventListener("click", ()=>{
-      window.scrollTo({ top: window.innerHeight * 0.9, behavior: "smooth" });
-      setTimeout(()=>spawnSparkle(window.innerWidth*0.65, window.innerHeight*0.35), 120);
-    });
-
-    // petit effet à chaque gros scroll
-    let lastBurst = 0;
-    window.addEventListener('scroll', ()=>{
-      const y = window.scrollY;
-      if(Math.abs(y - lastBurst) > 650){
-        lastBurst = y;
-        spawnHearts(window.innerWidth*0.5, window.innerHeight*0.5, 10);
-        if(Math.random() < 0.6) spawnSparkle(rand(0, window.innerWidth), rand(0, window.innerHeight*0.45));
-      }
-    }, { passive:true });
-
-    /********************
-     *  COPY LINK
-     ********************/
-    $("#btnShare").addEventListener("click", async ()=>{
-      try{
-        await navigator.clipboard.writeText(location.href);
-        toast("Lien copié ✅");
-      } catch {
-        toast("Impossible de copier automatiquement. Copie le lien en haut 🔗");
-      }
-    });
-
-    /********************
-     *  GALLERY (optional)
-     ********************/
-    if(CONFIG.usePhotos){
-      $$(".ph").forEach((el)=>{
-        const i = el.getAttribute('data-i');
-        const url = `${CONFIG.photoPrefix}${i}${CONFIG.photoExt}`;
-        el.style.borderStyle = 'solid';
-        el.style.borderColor = 'rgba(255,255,255,.14)';
-        el.style.background = `url('${url}') center/cover no-repeat`;
-        el.textContent = "";
-      });
-    }
-
-    /********************
-     *  MUSIC (WebAudio) — son doux
-     ********************/
-    let audioCtx, gainNode, playing = false, oscA, oscB, lfo;
-
-    function startMusic(){
-      if(playing) return;
-      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-      gainNode = audioCtx.createGain();
-      gainNode.gain.value = 0.0;
-      gainNode.connect(audioCtx.destination);
-
-      oscA = audioCtx.createOscillator();
-      oscB = audioCtx.createOscillator();
-      oscA.type = 'sine';
-      oscB.type = 'triangle';
-      oscA.frequency.value = 220;
-      oscB.frequency.value = 330;
-
-      const filter = audioCtx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.value = 900;
-      filter.Q.value = 0.8;
-
-      lfo = audioCtx.createOscillator();
-      const lfoGain = audioCtx.createGain();
-      lfo.frequency.value = 0.12;
-      lfoGain.gain.value = 0.12;
-      lfo.connect(lfoGain);
-      lfoGain.connect(gainNode.gain);
-
-      oscA.connect(filter);
-      oscB.connect(filter);
-      filter.connect(gainNode);
-
-      oscA.start();
-      oscB.start();
-      lfo.start();
-
-      const t0 = audioCtx.currentTime;
-      gainNode.gain.cancelScheduledValues(t0);
-      gainNode.gain.setValueAtTime(0.0, t0);
-      gainNode.gain.linearRampToValueAtTime(0.20, t0 + 1.8);
-
-      playing = true;
-      toast('Musique ON 🎵');
-    }
-
-    function stopMusic(){
-      if(!playing) return;
-      const t0 = audioCtx.currentTime;
-      gainNode.gain.cancelScheduledValues(t0);
-      gainNode.gain.setValueAtTime(gainNode.gain.value, t0);
-      gainNode.gain.linearRampToValueAtTime(0.0, t0 + 0.8);
-      setTimeout(()=>{
-        try{ oscA.stop(); oscB.stop(); lfo.stop(); } catch(e){}
-        oscA = oscB = lfo = null;
-      }, 900);
-      playing = false;
-      toast('Musique OFF');
-    }
-
-    $("#btnMusic").addEventListener('click', async ()=>{
-      try{
-        if(!playing){
-          await (audioCtx?.resume?.() ?? Promise.resolve());
-          startMusic();
+      // Typewriter
+      const typedEl = $("#typed");
+      let pi=0, ci=0, del=false;
+      (function tick(){
+        const phrase = CONFIG.typedPhrases[pi % CONFIG.typedPhrases.length];
+        if(!del){
+          ci++; typedEl.textContent = phrase.slice(0,ci);
+          if(ci>=phrase.length){ del=true; setTimeout(tick, 1100); return; }
         } else {
-          stopMusic();
+          ci--; typedEl.textContent = phrase.slice(0,ci);
+          if(ci<=0){ del=false; pi++; }
         }
-      } catch {
-        toast("Ton navigateur bloque l'audio. Réessaie après avoir touché l'écran.");
+        setTimeout(tick, del?35:52);
+      })();
+
+      // Photos
+      if(CONFIG.usePhotos){
+        $$(".ph").forEach((el)=>{
+          const i = el.getAttribute("data-i");
+          const url = `${CONFIG.photoPrefix}${i}${CONFIG.photoExt}?v=${Date.now()}`;
+          el.style.borderStyle = "solid";
+          el.style.borderColor = "rgba(255,255,255,.14)";
+          el.style.background = `url('${url}') center/cover no-repeat`;
+          el.textContent = "";
+        });
       }
-    });
 
-    /********************
-     *  CŒURS + SPARKLES (boutons + clic)
-     ********************/
-    $("#btnHearts").addEventListener('click', ()=>{ burst(55); toast('💘'); });
-    window.addEventListener('pointerdown', (e)=>{
-      spawnHearts(e.clientX, e.clientY, 14);
-      if(Math.random() < 0.55) spawnSparkle(e.clientX, e.clientY);
-    });
+      // Gate
+      const gate = $("#gate");
+      const gateInput = $("#gateInput");
+      const gateBtn = $("#gateBtn");
+      const gateHint = $("#gateHint");
+      const gateError = $("#gateError");
+      $("#gateName").textContent = CONFIG.toName;
+      gateHint.textContent = "Indice : " + (CONFIG.passwordHint || "");
 
-    // petit boost au chargement
-    setTimeout(()=>burst(34), 450);
+      // bloque le scroll tant que c'est fermé
+      document.body.style.overflow = "hidden";
+
+      function clean(s){
+        return (s||"").toLowerCase().normalize("NFKC").trim().replace(/[^a-z0-9]/g,"");
+      }
+      function unlock(){
+        document.body.style.overflow = "";
+        gate.classList.add("fadeOut");
+        setTimeout(()=> gate.classList.add("hide"), 520);
+        burst(80);
+      }
+      function deny(){
+        gateError.textContent = "Mot de passe incorrect 😅";
+        gate.classList.remove("shake"); void gate.offsetWidth; gate.classList.add("shake");
+        spawnHearts(window.innerWidth/2, window.innerHeight*0.55, 18);
+        spawnSparkle(window.innerWidth/2, window.innerHeight*0.55);
+      }
+      function check(){
+        const v = clean(gateInput.value);
+        const p = clean(CONFIG.password); // "nadhem&apo" => "nadhemapo"
+        if(v === p) unlock(); else deny();
+      }
+      gateBtn.addEventListener("click", check);
+      gateInput.addEventListener("keydown", (e)=>{ if(e.key==="Enter") check(); });
+
+      // clic écran = cœurs
+      window.addEventListener("pointerdown", (e)=>{
+        if(!gate.classList.contains("hide")) return; // pas avant déverrouillage
+        spawnHearts(e.clientX, e.clientY, 14);
+        if(Math.random()<0.55) spawnSparkle(e.clientX, e.clientY);
+      });
+
+      // bouton cœurs
+      $("#btnHearts").addEventListener("click", ()=> burst(55));
+
+      // musique : essaye music.mp3 si présent, sinon fait juste rien (safe)
+      const audio = $("#musicFile");
+      let playing = false;
+      $("#btnMusic").addEventListener("click", async ()=>{
+        if(!gate.classList.contains("hide")) return; // seulement après déverrouillage
+        try{
+          if(!playing){
+            await audio.play();
+            playing = true;
+          } else {
+            audio.pause();
+            playing = false;
+          }
+        } catch {
+          // si music.mp3 n'existe pas ou bloqué, rien
+        }
+      });
+
+      // petit burst au démarrage (derrière le portail)
+      setTimeout(()=>burst(24), 400);
+    });
   </script>
 </body>
 </html>
