@@ -28,15 +28,30 @@
     }
 
     /* 🔒 verrouillage visuel derrière le portail */
-    body.locked .wrap{
-  filter: blur(22px) brightness(.70) saturate(.9);
-  transform: scale(1.02);
-  user-select:none;
+    /* 🔒 verrouillage global : floute tout le site */
+body.locked{
+  overflow: hidden; /* bloque le scroll */
 }
-/* on bloque les clics derrière, MAIS PAS le portail */
-body.locked .wrap *{ pointer-events:none; }
-body.locked #gate, body.locked #gate *{ pointer-events:auto; }
-    body.locked canvas#fx{ filter: blur(10px); }
+
+/* on floute TOUT ce qui est derrière */
+body.locked > *:not(#gate){
+  filter: blur(22px) brightness(.65) saturate(.9);
+  transform: scale(1.02);
+  pointer-events: none;      /* impossible de cliquer derrière */
+  user-select: none;
+}
+
+/* portail TOUJOURS cliquable et net */
+#gate{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+#gate, #gate *{
+  pointer-events: auto !important;
+  filter: none !important;
+  transform: none !important;
+}
 
     .glow{position:fixed; inset:-80px; pointer-events:none; opacity:.55; filter: blur(30px); z-index:0;}
     .glow::before{
